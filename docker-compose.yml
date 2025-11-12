@@ -14,6 +14,9 @@ services:
     pre_stop:
       - command: php artisan octane:stop
 
+    ports:
+      - '8000:8000'
+
     volumes:
       - lvdata:/app/storage
     env_file:
