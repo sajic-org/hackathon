@@ -13,10 +13,12 @@ RUN install-php-extensions \
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --omit=dev
 
 COPY . .
 
 RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
+
+RUN npm run build
 
 CMD [ "composer", "run", "dev" ]
