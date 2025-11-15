@@ -9,7 +9,6 @@ services:
     pull_policy: always
 
     post_start:
-      - command: npm run build
       - command: php artisan optimize
     pre_stop:
       - command: php artisan octane:stop
