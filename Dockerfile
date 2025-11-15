@@ -19,6 +19,7 @@ COPY . .
 
 RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
+ENV SKIP_WAYFINDER=true
 RUN npm run build
 
 CMD [ "composer", "run", "dev" ]
