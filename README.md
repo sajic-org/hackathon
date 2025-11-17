@@ -107,4 +107,51 @@ Por padrão o `.env.example` usa `DB_CONNECTION=sqlite`. Para outros bancos (MyS
 - Se for usar `laravel/octane` (presente nas dependências), recomenda-se checar a documentação oficial para executar com Swoole ou RoadRunner em produção.
 - Para deploy, configure um servidor web (Nginx/Apache) apontando para `public/` e rode as migrações e build de assets antes de subir.
 
+**Rodando com Docker**
+
+O repositório inclui um `Dockerfile` e um `docker-compose.yml` para construir e executar a aplicação em container. A configuração atual:
+
+- O `Dockerfile` usa a imagem `dunglas/frankenphp` (PHP + servidor) e instala `node`/`npm`, instala dependências PHP e gera os assets via `npm run build`.
+- O `docker-compose.yml` define um serviço `app` que expõe a porta `8000` e usa `php artisan octane:start` como comando principal; o `.env` do projeto é carregado via `env_file`.
+
+Comandos básicos (na raiz do projeto, PowerShell):
+
+```powershell
+# Buildar a imagem e subir o container (modo detached)
+docker compose up --build -d
+
+# Ver logs do serviço
+docker compose logs -f app
+
+# Executar migrações dentro do container
+docker compose exec app php artisan migrate --force
+
+# Gerar a chave da aplicação (se ainda não existir)
+docker compose exec app php artisan key:generate
+
+# Abrir um shell no container (alpine sh)
+docker compose exec app sh
+
+# Parar e remover containers
+docker compose down
+```
+
+Observações sobre banco de dados e arquivos:
+
+- O `.env.example` usa SQLite por padrão (`DB_CONNECTION=sqlite`). Se mantiver o SQLite, crie o arquivo antes de migrar:
+
+```powershell
+# criar o arquivo sqlite localmente e rodar migrações dentro do container
+New-Item -Path database\database.sqlite -ItemType File -Force
+docker compose exec app php artisan migrate --force
+```
+
+- O `docker-compose.yml` atual monta um volume `lvdata` para `storage/` (`volumes: - lvdata:/app/storage`), mas o código-fonte não é montado como volume, então alterações no código exigirão rebuild da imagem (`docker compose up --build`).
+
+Limitações / dicas:
+
+- O `Dockerfile` executa `npm ci --omit=dev` e `npm run build` durante a construção da imagem — isso produz assets estáticos para produção. Se quiser usar o modo de desenvolvimento do Vite (`npm run dev`) para hot-reload, será necessário ajustar o `Dockerfile`/`docker-compose.yml` ou rodar o frontend localmente fora do container.
+- O `docker-compose.yml` configura `php artisan octane:start` no serviço; isso inicia a aplicação via Octane/FrankenPHP. Se preferir usar o servidor embutido do PHP para debugging, comente/ajuste o comando no `docker-compose.yml` para `php artisan serve` (há uma configuração comentada como exemplo no arquivo).
+
+
 Problemas? Abra uma issue descrevendo o erro e o ambiente (Windows/macOS/Linux, versões de PHP/Node). Boa sorte!
