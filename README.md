@@ -22,11 +22,11 @@ composer run setup
 ```
 
 > Observação (Windows): este repositório também inclui dois scripts específicos para Windows no `composer.json`.
-> Os nomes dos scripts contêm `"windowns"` conforme definido no arquivo (mesmo com o spelling). Use-os se estiver enfrentando problemas de plataforma/permssões.
+> Os nomes dos scripts contêm `"windows"` conforme definido no arquivo (mesmo com o spelling). Use-os se estiver enfrentando problemas de plataforma/permssões.
 
 ```powershell
 # Script para Windows que ignora a checagem da extensão `pcntl` durante a instalação (quando aplicável)
-composer run setup:windowns
+composer run setup:windows
 ```
 
 3. (Opcional) Se preferir fazer passo-a-passo manualmente:
@@ -53,7 +53,7 @@ composer run dev
 > Observação (Windows): existe uma variante orientada ao Windows que evita o uso do `php artisan pail` no fluxo padrão. Rode a versão Windows com:
 
 ```powershell
-composer run dev:windowns
+composer run dev:windows
 ```
 
 Se preferir rodar apenas o frontend (Vite):
