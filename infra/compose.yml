@@ -1,0 +1,104 @@
+services:
+  app:
+    container_name: laravel
+    image: marce1in/meira:latest
+    restart: ${RESTART_POLICY}
+    command: sh -c "php artisan config:cache && php artisan storage:link && php artisan migrate --force ; php artisan octane:start"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hacka.rule=Host(`${APP_URL}`)"
+      - "traefik.http.services.hacka.loadbalancer.server.port=8000"
+      - "com.centurylinklabs.watchtower.enable=true"
+    pre_stop:
+      - command: php artisan octane:stop
+    networks:
+      - hacka-infra
+    volumes:
+      - lvdata:/app/storage
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/up"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  queue:
+    container_name: queue
+    image: marce1in/meira:latest
+    restart: ${RESTART_POLICY}
+    command: php artisan queue:work redis --sleep=3 --tries=3 --max-jobs=1000 --max-time=3600
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - hacka-infra
+    env_file:
+      - .env
+    depends_on:
+      - app
+
+  traefik:
+    container_name: traefik
+    image: traefik:v3.6
+    restart: ${RESTART_POLICY}
+    command:
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.docker.exposedbydefault=false"
+      - "--certificatesresolvers.lets-encrypt.acme.tlschallenge=${USE_HTTPS}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - hacka-infra
+    env_file:
+      - .env
+
+  watchtower:
+    container_name: watchtower
+    image: nickfedor/watchtower
+    restart: ${RESTART_POLICY}
+    command: --label-enable --include-stopped --revive-stopped --interval 60 --cleanup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  postgres:
+    container_name: postgres
+    image: postgres:18-alpine
+    restart: ${RESTART_POLICY}
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    networks:
+      - hacka-infra
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  redis:
+    container_name: redis
+    restart: ${RESTART_POLICY}
+    image: valkey/valkey:9-alpine
+    networks:
+      - hacka-infra
+    volumes:
+      - vkdata:/data
+    env_file:
+      - .env
+
+volumes:
+  lvdata:
+  pgdata:
+  vkdata:
+
+networks:
+  hacka-infra:

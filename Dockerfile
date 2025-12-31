@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.9.0-php8.4.11-alpine
+FROM dunglas/frankenphp:1.11.1-php8.4.16-alpine
 
 RUN apk add --no-cache nodejs npm
 
@@ -13,13 +13,15 @@ RUN install-php-extensions \
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
 COPY . .
 
 RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
 
-ENV SKIP_WAYFINDER=true
+ARG VITE_APP_NAME="Hackathon"
 RUN npm run build
 
-CMD [ "composer", "run", "dev" ]
+RUN php artisan event:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
