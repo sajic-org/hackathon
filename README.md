@@ -21,6 +21,14 @@ Este repositório é um esqueleto Laravel + React (Inertia + Vite) usado no proj
 composer run setup
 ```
 
+> Observação (Windows): este repositório também inclui dois scripts específicos para Windows no `composer.json`.
+> Os nomes dos scripts contêm `"windows"` conforme definido no arquivo (mesmo com o spelling). Use-os se estiver enfrentando problemas de plataforma/permssões.
+
+```powershell
+# Script para Windows que ignora a checagem da extensão `pcntl` durante a instalação (quando aplicável)
+composer run setup:windows
+```
+
 3. (Opcional) Se preferir fazer passo-a-passo manualmente:
 
 ```powershell
@@ -40,6 +48,12 @@ O `composer.json` já traz um script `dev` que executa em paralelo o servidor PH
 
 ```powershell
 composer run dev
+```
+
+> Observação (Windows): existe uma variante orientada ao Windows que evita o uso do `php artisan pail` no fluxo padrão. Rode a versão Windows com:
+
+```powershell
+composer run dev:windows
 ```
 
 Se preferir rodar apenas o frontend (Vite):
@@ -152,6 +166,3 @@ Limitações / dicas:
 
 - O `Dockerfile` executa `npm ci --omit=dev` e `npm run build` durante a construção da imagem — isso produz assets estáticos para produção. Se quiser usar o modo de desenvolvimento do Vite (`npm run dev`) para hot-reload, será necessário ajustar o `Dockerfile`/`docker-compose.yml` ou rodar o frontend localmente fora do container.
 - O `docker-compose.yml` configura `php artisan octane:start` no serviço; isso inicia a aplicação via Octane/FrankenPHP. Se preferir usar o servidor embutido do PHP para debugging, comente/ajuste o comando no `docker-compose.yml` para `php artisan serve` (há uma configuração comentada como exemplo no arquivo).
-
-
-Problemas? Abra uma issue descrevendo o erro e o ambiente (Windows/macOS/Linux, versões de PHP/Node). Boa sorte!
