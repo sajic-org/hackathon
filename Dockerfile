@@ -8,7 +8,8 @@ RUN install-php-extensions \
     pdo_pgsql \
     pgsql \
     intl \
-    zip
+    zip \
+    redis
 
 WORKDIR /app
 
