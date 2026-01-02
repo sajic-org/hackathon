@@ -13,7 +13,7 @@ RUN install-php-extensions \
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json .
 RUN npm ci
 
 COPY . .
