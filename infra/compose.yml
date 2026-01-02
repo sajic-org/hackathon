@@ -46,15 +46,20 @@ services:
     image: traefik:v3.6
     restart: ${RESTART_POLICY}
     command:
+      - "--log.level=${TRAEFIK_LOG_LEVEL}"
       - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-      - "--providers.docker.exposedbydefault=false"
-      - "--certificatesresolvers.lets-encrypt.acme.tlschallenge=${USE_HTTPS}"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge=${USE_HTTPS}"
+      - "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare"
+      - "--certificatesresolvers.cloudflare.acme.email=${CLOUDFLARE_EMAIL}"
+      - "--certificatesresolvers.cloudflare.acme.storage=/certs/acme.json"
     ports:
       - "80:80"
       - "443:443"
     volumes:
+      - trdata:/certs
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - hacka-infra
@@ -99,6 +104,7 @@ volumes:
   lvdata:
   pgdata:
   vkdata:
+  trdata:
 
 networks:
   hacka-infra:
