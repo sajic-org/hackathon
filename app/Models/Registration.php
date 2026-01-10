@@ -24,11 +24,13 @@ class Registration extends Model
         'check_in_at' => 'datetime',
     ];
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function payment(): BelongsTo {
+    public function payment(): BelongsTo
+    {
         return $this->belongsTo(Payment::class);
     }
 }

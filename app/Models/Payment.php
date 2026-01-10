@@ -19,16 +19,17 @@ class Payment extends Model
         'transaction_id',
     ];
 
-
     protected $casts = [
         'status' => PaymentStatus::class,
     ];
 
-    public function registration(): HasOne {
+    public function registration(): HasOne
+    {
         return $this->hasOne(Registration::class);
     }
 
-    public function user(): HasOneThrough {
+    public function user(): HasOneThrough
+    {
         return $this->hasOneThrough(User::class, Registration::class);
     }
 }

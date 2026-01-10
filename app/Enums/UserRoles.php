@@ -2,10 +2,10 @@
 
 namespace App\Enums;
 
-enum UserRoles :string
+enum UserRoles: string
 {
     case USER = 'user';
     case APPRAISER = 'appraiser';
-    case COMISSION = 'comission';
+    case COMMISSION = 'commission';
     case ADMIN = 'admin';
 }
