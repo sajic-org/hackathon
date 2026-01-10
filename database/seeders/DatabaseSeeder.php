@@ -44,6 +44,7 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             TeamSeeder::class,
             EvalutationCriteriaSeeder::class,
+            EvaluationSeeder::class,
         ]);
     }
 }
