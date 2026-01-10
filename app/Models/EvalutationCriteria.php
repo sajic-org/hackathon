@@ -12,6 +12,10 @@ class EvalutationCriteria extends Model
 
     public $fillable = [
         'name',
-        'score',
+        'weight',
+    ];
+
+    protected $casts = [
+        'weight' => 'decimal:2,1',
     ];
 }
