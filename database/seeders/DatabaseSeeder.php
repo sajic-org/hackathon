@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             PaymentSeeder::class,
             RegistrationSeeder::class,
             PostSeeder::class,
+            TeamSeeder::class,
         ]);
     }
 }
