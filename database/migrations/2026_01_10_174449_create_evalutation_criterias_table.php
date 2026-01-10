@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('evalutation_criterias', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedTinyInteger('score');
+            $table->decimal('weight', 2, 1);
             $table->timestamps();
         });
     }
