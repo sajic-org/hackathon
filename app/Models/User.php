@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -42,6 +43,5 @@ class User extends Authenticatable
         'created_at' => 'datetime',
         'verified_at'=> 'datetime',
         'role' => UserRoles::class,
-        'payment_status' => PaymentStatus::class,
     ];
 }
