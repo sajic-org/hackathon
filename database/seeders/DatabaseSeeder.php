@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             SponsorLeadSeeder::class,
             PaymentSeeder::class,
             RegistrationSeeder::class,
+            PostSeeder::class,
         ]);
     }
 }
