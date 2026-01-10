@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
             RegistrationSeeder::class,
             PostSeeder::class,
             TeamSeeder::class,
+            EvalutationCriteriaSeeder::class,
         ]);
     }
 }
