@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Enums\UserRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
@@ -51,5 +52,9 @@ class User extends Authenticatable
 
     public function payment(): HasOneThrough {
         return $this->hasOneThrough(Payment::class, Registration::class);
+    }
+
+    public function team(): BelongsTo {
+        return $this->belongsTo(Team::class);
     }
 }
