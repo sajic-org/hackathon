@@ -24,10 +24,10 @@ class PostFactory extends Factory
 
     protected function generateRichText(): string
     {
-        return "<h2>" . fake()->catchPhrase() . "</h2>" .
-            "<p><strong>" . fake()->sentence() . "</strong></p>" .
-            "<p>" . fake()->realText(400) . "</p>" .
-            "<blockquote>" . fake()->sentence() . "</blockquote>" .
-            "<p>" . fake()->realText(200) . "</p>";
+        return '<h2>'.fake()->catchPhrase().'</h2>'.
+            '<p><strong>'.fake()->sentence().'</strong></p>'.
+            '<p>'.fake()->realText(400).'</p>'.
+            '<blockquote>'.fake()->sentence().'</blockquote>'.
+            '<p>'.fake()->realText(200).'</p>';
     }
 }
