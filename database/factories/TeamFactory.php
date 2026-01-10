@@ -18,6 +18,7 @@ class TeamFactory extends Factory
     {
         return [
             'name' => fake()->state() . ' ' . fake()->colorName,
+            'image' => '/public/equipe-exemplo.jpg'
         ];
     }
 }
