@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class EvalutationCriteria extends Model
+class Criteria extends Model
 {
-    /** @use HasFactory<\Database\Factories\EvalutationCriteriaFactory> */
+    /** @use HasFactory<\Database\Factories\CriteriaFactory> */
     use HasFactory;
 
     public $fillable = [

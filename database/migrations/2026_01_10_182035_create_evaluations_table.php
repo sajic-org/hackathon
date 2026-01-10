@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\EvalutationCriteria;
+use App\Models\Criteria;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -22,8 +22,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class)
                 ->constrained()
                 ->cascadeOnDelete();
-            $table->foreignIdFor(EvalutationCriteria::class)
-                ->constrained()
+            $table->foreignIdFor(Criteria::class)
+                ->constrained('criterias')
                 ->restrictOnDelete();
             $table->decimal('score', 3, 1);
             $table->timestamps();

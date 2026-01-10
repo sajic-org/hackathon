@@ -14,7 +14,7 @@ class Evaluation extends Model
     public $fillable = [
         'team_id',
         'user_id',
-        'evaluation_criteria_id',
+        'criteria_id',
         'score',
     ];
 
@@ -30,7 +30,7 @@ class Evaluation extends Model
         return $this->belongsTo(Team::class);
     }
 
-    public function evaluationCriteria(): BelongsTo{
-        return $this->belongsTo(EvalutationCriteria::class);
+    public function criteria(): BelongsTo{
+        return $this->belongsTo(Criteria::class);
     }
 }

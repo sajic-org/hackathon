@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\EvalutationCriteria;
+use App\Models\Criteria;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EvalutationCriteriaSeeder extends Seeder
+class CriteriaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        EvalutationCriteria::factory(5)->create();
+        Criteria::factory(5)->create();
     }
 }

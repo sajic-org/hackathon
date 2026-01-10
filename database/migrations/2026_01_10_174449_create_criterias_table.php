@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('evalutation_criterias', function (Blueprint $table) {
+        Schema::create('criterias', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->decimal('weight', 2, 1)->default(1.0);
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evalutation_criterias');
+        Schema::dropIfExists('criterias');
     }
 };

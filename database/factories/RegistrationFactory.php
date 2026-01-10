@@ -24,7 +24,7 @@ class RegistrationFactory extends Factory
             'user_id' => User::factory(),
             'payment_id' => Payment::factory(),
             'checked_in' => $checkedIn,
-            'check_in_at' => $checkedIn ? $this->faker->dateTimeBetween('-1 month', 'now') : null,
+            'check_in_at' => $checkedIn ? fake()->dateTimeBetween('-1 month', 'now') : null,
         ];
     }
 }

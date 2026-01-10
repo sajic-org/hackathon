@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\EvalutationCriteria;
+use App\Models\Criteria;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,8 +22,8 @@ class EvaluationFactory extends Factory
         return [
             'team_id' => Team::factory(),
             'user_id' => User::factory(),
-            'evaluation_criteria_id' => EvalutationCriteria::factory(),
-            'score' => $this->faker->randomFloat(1, 0, 10),
+            'criteria_id' => Criteria::factory(),
+            'score' => fake()->randomFloat(1, 0, 10),
         ];
     }
 }
