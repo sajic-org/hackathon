@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Enums\UserRoles;
 use App\Enums\PaymentStatus;
-use Faker\Provider\Payment;
 
 class User extends Authenticatable
 {
@@ -42,7 +41,7 @@ class User extends Authenticatable
         'password'   => 'hashed',
         'created_at' => 'datetime',
         'verified_at'=> 'datetime',
-        'role' => UserRoles::USER,
-        'payment_status' => PaymentStatus:: PENDING,
+        'role' => UserRoles::class,
+        'payment_status' => PaymentStatus::class,
     ];
 }
