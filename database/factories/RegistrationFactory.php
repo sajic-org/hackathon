@@ -18,7 +18,7 @@ class RegistrationFactory extends Factory
      */
     public function definition(): array
     {
-        $checkedIn = $this->faker->boolean(70); // 70% chance of being checked in
+        $checkedIn = fake()->boolean(70); // 70% chance of being checked in
 
         return [
             'user_id' => User::factory(),
