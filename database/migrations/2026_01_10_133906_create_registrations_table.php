@@ -19,6 +19,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->foreignIdFor(Payment::class)
+                ->nullable()
                 ->constrained()
                 ->nullOnDelete();
             $table->boolean('checked_in')->default(false);
