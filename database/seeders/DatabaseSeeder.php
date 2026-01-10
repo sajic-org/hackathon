@@ -27,14 +27,14 @@ class DatabaseSeeder extends Seeder
             'role' => UserRoles::APPRAISER,
         ]);
         User::factory()->create([
-            'name' => 'Test Comission',
-            'email' => 'comission@example.com',
-            'role' => UserRoles::COMISSION,
+            'name' => 'Test commission',
+            'email' => 'commission@example.com',
+            'role' => UserRoles::COMMISSION,
         ]);
         User::factory()->create([
             'name' => 'Test Admin',
             'email' => 'admin@example.com',
-            'role' => UserRoles::ADMIN
+            'role' => UserRoles::ADMIN,
         ]);
 
         $this->call([
