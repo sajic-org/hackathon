@@ -6,6 +6,7 @@ use App\Enums\UserRoles;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,5 +65,9 @@ class User extends Authenticatable implements FilamentUser
     public function payment(): HasOneThrough
     {
         return $this->hasOneThrough(Payment::class, Registration::class);
+    }
+
+    public function team(): BelongsTo {
+        return $this->belongsTo(Team::class);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('image');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignIdFor(Team::class)
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
         });
     }
 
@@ -24,6 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teams');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeignIdFor(Team::class);
+        });
     }
 };
