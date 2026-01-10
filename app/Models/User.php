@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Enums\UserRoles;
-use App\Enums\PaymentStatus;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class User extends Authenticatable
 {
@@ -43,4 +44,12 @@ class User extends Authenticatable
         'verified_at'=> 'datetime',
         'role' => UserRoles::class,
     ];
+
+    public function registration(): HasOne {
+        return $this->hasOne(Registration::class);
+    }
+
+    public function payment(): HasOneThrough {
+        return $this->hasOneThrough(Payment::class, Registration::class);
+    }
 }
