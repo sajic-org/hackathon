@@ -18,4 +18,8 @@ class Team extends Model
     public function users(): HasMany {
         return $this->hasMany(User::class);
     }
+
+    public function evaluations(): HasMany {
+        return $this->hasMany(Evaluation::class);
+    }
 }
