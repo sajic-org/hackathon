@@ -15,8 +15,12 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->ulid('id');
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Payment::class);
+            $table->foreignIdFor(User::class)
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(Payment::class)
+                ->constrained()
+                ->nullOnDelete();
             $table->boolean('checked_in')->default(false);
             $table->dateTime('check_in_at')->nullable();
             $table->timestamps();
