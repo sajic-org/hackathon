@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SponsorLeadSeeder::class,
             PaymentSeeder::class,
+            RegistrationSeeder::class,
         ]);
     }
 }
