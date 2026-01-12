@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserRoles;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasFactory, Notifiable;
 
@@ -41,6 +42,11 @@ class User extends Authenticatable implements FilamentUser
         'password',
     ];
 
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar ?? null;
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return Gate::allows('is_admin') || Gate::allows('is_commission');
@@ -67,7 +73,8 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOneThrough(Payment::class, Registration::class);
     }
 
-    public function team(): BelongsTo {
+    public function team(): BelongsTo
+    {
         return $this->belongsTo(Team::class);
     }
 }

@@ -20,7 +20,8 @@ class Criteria extends Model
         'weight' => 'decimal:2,1',
     ];
 
-    public function evaluations(): HasMany{
+    public function evaluations(): HasMany
+    {
         return $this->hasMany(Evaluation::class);
     }
 }

@@ -6,7 +6,6 @@ use App\Enums\UserRoles;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use WorkOS\WorkOS;
 
 class AppServiceProvider extends ServiceProvider
 {

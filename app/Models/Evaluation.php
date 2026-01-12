@@ -19,18 +19,21 @@ class Evaluation extends Model
     ];
 
     protected $casts = [
-        'score' => 'decimal:3,1'
+        'score' => 'decimal:3,1',
     ];
 
-    public function user(): BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function team(): BelongsTo{
+    public function team(): BelongsTo
+    {
         return $this->belongsTo(Team::class);
     }
 
-    public function criteria(): BelongsTo{
+    public function criteria(): BelongsTo
+    {
         return $this->belongsTo(Criteria::class);
     }
 }

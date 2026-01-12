@@ -8,6 +8,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
+Route::get('/admin/login', function () {
+    return redirect('/login');
+});
+
 Route::middleware([
     'auth',
     ValidateSessionWithWorkOS::class,
