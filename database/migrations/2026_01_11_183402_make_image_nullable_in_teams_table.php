@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserRoles;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', UserRoles::cases())->default(UserRoles::PARTICIPANT);
+        Schema::table('teams', function (Blueprint $table) {
+            $table->text('image')->nullable()->change();
         });
     }
 
@@ -22,8 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-        });
+        Schema::table('teams', function (Blueprint $table) {});
     }
 };
