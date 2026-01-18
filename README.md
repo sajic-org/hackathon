@@ -7,12 +7,12 @@ Sistema de gerenciamento de hackathon construido com Laravel e React.
 **Backend**
 - PHP 8.4
 - Laravel 12
-- Filament v4 (painel administrativo)
+- Filament v5 (painel administrativo)
 - Laravel Octane v2
 
 **Frontend**
 - React 19
-- Inertia.js v2
+- Livewire v4
 - Tailwind CSS v4
 - TypeScript
 
