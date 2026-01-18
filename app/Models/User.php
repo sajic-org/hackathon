@@ -2,13 +2,20 @@
 
 namespace App\Models;
 
+use App\Enums\UserRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Enums\UserRoles;
-use App\Enums\PaymentStatus;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasFactory, Notifiable;
 
@@ -21,6 +28,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'workos_id',
+        'avatar',
+        'role',
     ];
 
     /**
@@ -29,8 +39,27 @@ class User extends Authenticatable
      * @var array<int,string>
      */
     protected $hidden = [
+        'workos_id',
         'password',
     ];
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar ?? null;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return Gate::allows('is_admin') || Gate::allows('is_commission');
+    }
+
+    public function initials(): string
+    {
+        return Str::of($this->name)
+            ->explode(' ')
+            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->implode('');
+    }
 
     /**
      * The attributes that should be cast.
@@ -38,10 +67,23 @@ class User extends Authenticatable
      * @var array<string,string>
      */
     protected $casts = [
-        'password'   => 'hashed',
-        'created_at' => 'datetime',
-        'verified_at'=> 'datetime',
+        'password' => 'hashed',
+        'verified_at' => 'datetime',
         'role' => UserRoles::class,
-        'payment_status' => PaymentStatus::class,
     ];
+
+    public function registration(): HasOne
+    {
+        return $this->hasOne(Registration::class);
+    }
+
+    public function payment(): HasOneThrough
+    {
+        return $this->hasOneThrough(Payment::class, Registration::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

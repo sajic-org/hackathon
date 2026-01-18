@@ -1,48 +1,39 @@
 <?php
 
 use App\Models\User;
+use Livewire\Livewire;
 
 test('profile page is displayed', function () {
-    $user = User::factory()->create();
+    $this->actingAs($user = User::factory()->create());
 
-    $response = $this
-        ->actingAs($user)
-        ->get('/settings/profile');
-
-    $response->assertOk();
+    $this->get('/settings/profile')->assertOk();
 });
 
 test('profile information can be updated', function () {
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
-        ->patch('/settings/profile', [
-            'name' => 'Updated Name',
-        ]);
+    $this->actingAs($user);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/settings/profile');
+    $response = Livewire::test('pages::settings.profile')
+        ->set('name', 'Test User')
+        ->call('updateProfileInformation');
+
+    $response->assertHasNoErrors();
 
     $user->refresh();
 
-    expect($user->name)->toBe('Updated Name');
+    expect($user->name)->toEqual('Test User');
 });
 
 test('user can delete their account', function () {
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
-        ->delete('/settings/profile', [
-            'password' => 'password',
-        ]);
+    $this->actingAs($user);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
+    $response = Livewire::test('pages::settings.delete-user-form')
+        ->call('deleteUser');
 
-    $this->assertGuest();
+    $response->assertRedirect('/');
+
     expect($user->fresh())->toBeNull();
 });

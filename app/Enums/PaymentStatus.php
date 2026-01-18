@@ -9,7 +9,7 @@ enum PaymentStatus: string
     case PROCESSED = 'processed';
     case PROCESSING = 'processing';
     case ACTION_REQUIRED = 'action_required';
-    case CANCELLED = 'canceled';
+    case CANCELLED = 'cancelled';
     case CHARGED_BACK = 'charged_back';
     case EXPIRED = 'expired';
     case FAILED = 'failed';
